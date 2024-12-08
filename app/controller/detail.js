@@ -64,7 +64,6 @@ class DetailController extends Controller {
       return;
     }
     const { routes } = result[0];
-    console.log(routes, 8888);
     ctx.body = {
       code: 200,
       msg: "查询成功",
