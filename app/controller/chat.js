@@ -11,11 +11,11 @@ class ChatController extends Controller {
     const socketId = ctx.request.url.split("=")[1];
     const socket = ctx.websocket;
     let room = ctx.helper.room;
-    room[socketId] = socket;
+    room[socketId] = { socket, userName };
 
     // 每次有新用户加入时，向房间内所有人发送在线人数
     for (let key in room) {
-      let socket = room[key];
+      let { socket } = room[key];
       const length = Object.keys(room).length;
       socket.send(JSON.stringify({ length }));
     }
@@ -32,7 +32,8 @@ class ChatController extends Controller {
         // 向除自己外的 socket 发送消息
         for (let key in room) {
           if (key !== socketId) {
-            let socket = room[key];
+            let { socket } = room[key];
+            let { userName } = room[socketId];
             socket.send(
               JSON.stringify({
                 msg,
@@ -48,7 +49,7 @@ class ChatController extends Controller {
 
         // 每次有新用户退出时，向房间内所有人发送在线人数
         for (let key in room) {
-          let socket = room[key];
+          let { socket } = room[key];
           const length = Object.keys(room).length;
           socket.send(JSON.stringify({ length }));
         }
