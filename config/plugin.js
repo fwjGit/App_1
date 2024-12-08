@@ -12,4 +12,9 @@ module.exports = {
     enable: true,
     package: "egg-jwt",
   },
+  websocket: {
+    enable: true,
+    package: "egg-websocket-plugin",
+    useAppMiddlewares: false, // 禁用app.use()注册的全局中间件
+  },
 };

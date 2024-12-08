@@ -45,7 +45,7 @@ module.exports = (appInfo) => {
 
   config.middleware = ["verifyToken"];
   config.verifyToken = {
-    ignore: [],
+    ignore: ["/chat"],
     userName: "",
   };
 
